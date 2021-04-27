@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles({
   form: {
@@ -17,8 +18,14 @@ const useStyles = makeStyles({
   }
 });
 
+interface FormFields {
+  serverAddress: string;
+  password: string;
+}
+
 const ConnectionForm: React.FC = () => {
   const classes = useStyles();
+  const { register } = useForm<FormFields>();
 
   return (
     <Card>
@@ -29,13 +36,13 @@ const ConnectionForm: React.FC = () => {
         <form className={classes.form}>
           <TextField
             className={classes.formControl}
-            name="server-address"
+            {...register('serverAddress')}
             label="Server address"
             required
           />
           <TextField
             className={classes.formControl}
-            name="password"
+            {...register('password')}
             label="Password (optional)"
             type="password"
           />

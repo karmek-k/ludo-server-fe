@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const useStyles = makeStyles({
   form: {
@@ -23,9 +25,14 @@ interface FormFields {
   password: string;
 }
 
+const schema = yup.object().shape({
+  serverAddress: yup.string().url().required(),
+  password: yup.string()
+});
+
 const ConnectionForm: React.FC = () => {
   const classes = useStyles();
-  const { register } = useForm<FormFields>();
+  const { register } = useForm<FormFields>({ resolver: yupResolver(schema) });
 
   return (
     <Card>

@@ -17,7 +17,7 @@ const App: React.FC = () => {
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
-      <ConnectionIndicator />
+      <ConnectionIndicator connected={false} />
     </Context.Provider>
   );
 };

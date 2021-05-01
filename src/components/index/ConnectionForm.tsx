@@ -32,7 +32,9 @@ const schema = yup.object().shape({
 
 const ConnectionForm: React.FC = () => {
   const classes = useStyles();
-  const { register } = useForm<FormFields>({ resolver: yupResolver(schema) });
+  const { register, handleSubmit } = useForm<FormFields>({
+    resolver: yupResolver(schema)
+  });
 
   return (
     <Card>
@@ -40,13 +42,18 @@ const ConnectionForm: React.FC = () => {
         <Typography variant="subtitle1">
           Connect to a ludo-server instance
         </Typography>
-        <form className={classes.form}>
+        <form
+          className={classes.form}
+          onSubmit={handleSubmit(data => console.log(data))}
+        >
           <TextField
             className={classes.formControl}
             {...register('serverAddress')}
             label="Server address"
+            placeholder="http://"
             required
           />
+
           <TextField
             className={classes.formControl}
             {...register('password')}

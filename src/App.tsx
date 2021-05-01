@@ -7,9 +7,8 @@ import NotFoundPage from './pages/NotFoundPage';
 import Context from './utils/context';
 import ConnectionIndicator from './components/shared/ConnectionIndicator';
 
-const serverUrl = 'http://localhost:8000';
-
 const App: React.FC = () => {
+  const [serverUrl, setServerUrl] = useState<string>('');
   const [socket, setSocket] = useState<Socket | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
 
@@ -24,10 +23,10 @@ const App: React.FC = () => {
     });
 
     setSocket(s);
-  }, []);
+  }, [serverUrl]);
 
   return (
-    <Context.Provider value={{ socket }}>
+    <Context.Provider value={{ socket, serverUrl }}>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={IndexPage} />

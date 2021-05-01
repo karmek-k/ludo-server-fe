@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 import Context from '../../utils/context';
+import { ConnectionState, indicatorMessages } from '../../utils/socketio';
 
 const useStyles = makeStyles({
   paper: {
@@ -24,16 +25,32 @@ const useStyles = makeStyles({
 
 const ConnectionIndicator: React.FC = () => {
   const { socket } = useContext(Context);
-  const connected = socket?.connected;
+  const [connection, setConnection] = useState<ConnectionState>(
+    ConnectionState.DISCONNECTED
+  );
+
+  useEffect(() => {
+    if (socket?.disconnected || !socket) {
+      setConnection(ConnectionState.DISCONNECTED);
+    }
+
+    if (socket?.connected) {
+      setConnection(ConnectionState.CONNECTED);
+    }
+  }, [socket]);
 
   const classes = useStyles();
 
   return (
     <Paper className={classes.paper} elevation={4}>
       <Typography
-        className={connected ? classes.connected : classes.disconnected}
+        className={
+          connection === ConnectionState.CONNECTED
+            ? classes.connected
+            : classes.disconnected
+        }
       >
-        {connected ? 'Connection established' : 'No connection'}
+        {indicatorMessages.get(connection)}
       </Typography>
     </Paper>
   );

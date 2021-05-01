@@ -5,6 +5,7 @@ import IndexPage from './pages/IndexPage';
 import GamePage from './pages/GamePage';
 import NotFoundPage from './pages/NotFoundPage';
 import Context from './utils/context';
+import ConnectionIndicator from './components/shared/ConnectionIndicator';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
+      <ConnectionIndicator />
     </Context.Provider>
   );
 };

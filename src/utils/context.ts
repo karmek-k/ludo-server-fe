@@ -3,13 +3,14 @@ import { Socket } from 'socket.io-client';
 
 export interface ContextData {
   socket: Socket | null;
-  serverUrl: string;
-  // setServerUrl: React.Dispatch<React.SetStateAction<string>>;
+  state: any;
+  dispatch: any;
 }
 
 const Context = React.createContext<ContextData>({
   socket: null,
-  serverUrl: ''
+  state: {},
+  dispatch: () => {}
 });
 
 export default Context;

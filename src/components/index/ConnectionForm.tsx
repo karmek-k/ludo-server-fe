@@ -21,12 +21,12 @@ const useStyles = makeStyles({
 });
 
 interface FormFields {
-  serverAddress: string;
+  serverUrl: string;
   password: string;
 }
 
 const schema = yup.object().shape({
-  serverAddress: yup.string().required(),
+  serverUrl: yup.string().required(),
   password: yup.string().max(64)
 });
 
@@ -49,8 +49,8 @@ const ConnectionForm: React.FC<Props> = ({ onValid }) => {
         <form className={classes.form} onSubmit={handleSubmit(onValid)}>
           <TextField
             className={classes.formControl}
-            {...register('serverAddress')}
-            label="Server address"
+            {...register('serverUrl')}
+            label="Server URL"
             placeholder="http://"
             required
           />

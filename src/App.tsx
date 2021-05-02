@@ -18,6 +18,9 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
+    setConnected(false);
+    setSocket(null);
+
     const s = io(state.serverUrl, { reconnectionAttempts: 3 });
 
     s.on('connect', () => {

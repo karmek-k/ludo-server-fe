@@ -23,13 +23,12 @@ const IndexPage: React.FC = () => {
         ludo-server
       </Typography>
       <ConnectionForm
-        onValid={data => {
-          console.log(data);
+        onValid={data =>
           dispatch({
             type: ServerUrlAction.SET,
             serverUrl: data.serverUrl
-          });
-        }}
+          })
+        }
       />
     </Container>
   );

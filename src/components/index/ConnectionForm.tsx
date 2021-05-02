@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -26,11 +26,15 @@ interface FormFields {
 }
 
 const schema = yup.object().shape({
-  serverAddress: yup.string().url().required(),
-  password: yup.string()
+  serverAddress: yup.string().required(),
+  password: yup.string().max(64)
 });
 
-const ConnectionForm: React.FC = () => {
+interface Props {
+  onValid: SubmitHandler<FormFields>;
+}
+
+const ConnectionForm: React.FC<Props> = ({ onValid }) => {
   const classes = useStyles();
   const { register, handleSubmit } = useForm<FormFields>({
     resolver: yupResolver(schema)
@@ -42,10 +46,7 @@ const ConnectionForm: React.FC = () => {
         <Typography variant="subtitle1">
           Connect to a ludo-server instance
         </Typography>
-        <form
-          className={classes.form}
-          onSubmit={handleSubmit(data => console.log(data))}
-        >
+        <form className={classes.form} onSubmit={handleSubmit(onValid)}>
           <TextField
             className={classes.formControl}
             {...register('serverAddress')}

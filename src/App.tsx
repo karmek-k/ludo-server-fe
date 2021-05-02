@@ -18,7 +18,7 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
-    const s = io(state.serverUrl);
+    const s = io(state.serverUrl, { reconnectionAttempts: 3 });
 
     s.on('connect', () => {
       setConnected(true);

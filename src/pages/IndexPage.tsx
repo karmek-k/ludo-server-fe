@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ConnectionForm from '../components/index/ConnectionForm';
+import Context from '../utils/context';
+import { ServerUrlAction } from '../utils/reducers';
 
 const useStyles = makeStyles({
   textCentered: {
@@ -11,6 +13,8 @@ const useStyles = makeStyles({
 });
 
 const IndexPage: React.FC = () => {
+  const { dispatch } = useContext(Context);
+
   const classes = useStyles();
 
   return (
@@ -18,7 +22,15 @@ const IndexPage: React.FC = () => {
       <Typography variant="h1" gutterBottom>
         ludo-server
       </Typography>
-      <ConnectionForm />
+      <ConnectionForm
+        onValid={data => {
+          console.log(data);
+          dispatch({
+            type: ServerUrlAction.SET,
+            serverUrl: data.serverUrl
+          });
+        }}
+      />
     </Container>
   );
 };
